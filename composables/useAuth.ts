@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { useCookie, useRuntimeConfig } from '#imports';
+import { useCookie } from '#imports';
 
 export const useAuth = () => {
   const user = ref<TODO>(null);
@@ -22,6 +22,19 @@ export const useAuth = () => {
     }
   };
 
+  const fetchUser = async () => {
+    try {
+      if (!token.value) return null;
+      const data = await $fetch(`/api/auth/user`, {
+        headers: { Authorization: `Bearer ${token.value}` },
+      });
+      user.value = data;
+    } catch (error) {
+      console.error('Failed to fetch user:', error);
+      logout();
+    }
+  };
+
   const logout = async () => {
     try {
       await $fetch(`/api/auth/logout`, { method: 'POST' });
@@ -37,6 +50,7 @@ export const useAuth = () => {
   return {
     user,
     login,
+    fetchUser,
     logout,
     isAuthenticated: computed(() => !!token.value),
   };

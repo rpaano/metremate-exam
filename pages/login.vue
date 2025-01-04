@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuth } from '~/composables/useAuth';
-import { useRouter } from '#imports';
 
 const email = ref('');
 const password = ref('');
 const error = ref('');
-const router = useRouter();
 const { login, isAuthenticated } = useAuth();
 
 const handleLogin = async () => {
   error.value = '';
   const success = await login({ email: email.value, password: password.value });
 
-  if (success) {
-    navigateTo('/metremate');
-  } else {
+  if (!success) {
     error.value = 'Invalid credentials';
+    return;
   }
+
+  navigateTo('/');
 };
 </script>
 
