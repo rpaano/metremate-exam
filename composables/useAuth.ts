@@ -18,6 +18,7 @@ export const useAuth = () => {
 
       return user;
     } catch (error) {
+      // TODO: change to toaster
       console.error("Failed to fetch auth token:", error);
     }
   };
@@ -30,6 +31,7 @@ export const useAuth = () => {
       });
       user.value = data;
     } catch (error) {
+      // TODO: change to toaster
       console.error('Failed to fetch user:', error);
       logout();
     }
@@ -40,6 +42,7 @@ export const useAuth = () => {
       await $fetch(`/api/auth/logout`, { method: 'POST' });
       navigateTo('login')
     } catch (error) {
+      // TODO: change to toaster
       console.error('Logout failed:', error);
     } finally {
       token.value = null;

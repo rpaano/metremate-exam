@@ -23,6 +23,6 @@ export const useCurrentProjectStore = defineStore('currentProject', {
       if (this.currentProject) {
         this.currentProject.name = projectName;
       }
-    }, 300), // 300ms debounce
+    }, 300),
   },
 });
